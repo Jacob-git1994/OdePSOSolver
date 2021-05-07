@@ -139,7 +139,7 @@ int main()
 	Eigen::VectorXd sol;
 	Eigen::VectorXd ic;
 	ic.resize(1); ic(0) = 1.;
-	sol = ic;
+	sol = ic; int z = 5;
 
 	solver->initalizeProblem(std::shared_ptr<ProblemWrapperIF>(new TestExp));
 	solver->initalizeSolverVectors(1);
