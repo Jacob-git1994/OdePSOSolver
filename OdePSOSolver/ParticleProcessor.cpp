@@ -358,7 +358,7 @@ void odepso::ParticleProcessor::PSO(std::unique_ptr<SolverIF>& solverTypeIn, std
 		calcStatistics();
 
 		std::cout << bestParticle.getParameters().getDt() << "\t" << bestParticle.getParameters().getRichardsonLevels() << "\t" << bestParticle.getParameters().getTotalRunTime() << "\n";
-		std::cout << varDt << "\t" << varRich << "\n";
+		//std::cout << varDt << "\t" << varRich << "\n";
 	}
 
 	//Update the best parameters for this best particle

@@ -145,7 +145,7 @@ int main()
 	solver->initalizeSolverVectors(1);
 
 	ParticleParameters partParams(10, 100, .5, 0., .5, 1, 1000, 1e-10);
-	OdeSolverParameters params(1e-10, 1e-2, 2, 10, .01, 1, partParams, 4);
+	OdeSolverParameters params(1e-10, 1e-4, 2, 10, .01, 1, partParams, 4);
 
 	std::minstd_rand randThing(654321);
 	Eigen::VectorXd currentState = ic;

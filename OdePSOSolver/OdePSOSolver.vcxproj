@@ -107,7 +107,7 @@
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ExcludePath>$(ExcludePath)</ExcludePath>
-    <IncludePath>C:\Users\Jacob\source\repos\eigen\Eigen;C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\Eigen3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -120,7 +120,7 @@
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ExcludePath>$(ExcludePath)</ExcludePath>
-    <IncludePath>C:\Users\Jacob\source\repos\eigen\Eigen;C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\Eigen3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,9 +162,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\Users\Jacob\source\repos\eigen\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,9 +179,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\Users\Jacob\source\repos\eigen\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
