@@ -77,6 +77,12 @@ namespace odepso
 		//Delete Assign copy
 		ParticleProcessor& operator=(const ParticleProcessor& pararticleProcessorIn) = delete;
 
+		//Move Particle Processor
+		ParticleProcessor(ParticleProcessor&& pararticleProcessorIn) = default;
+
+		//Move Assign
+		ParticleProcessor& operator=(ParticleProcessor&& pararticleProcessorIn) = default;
+
 		virtual ~ParticleProcessor() = default;
 
 		//Set best parameters

@@ -10,6 +10,8 @@
 #include "SolverIF.h"
 
 #include <Eigen/Dense>
+#include <exception>
+#include <iostream>
 #include <vector>
 #include <map>
 #include <random>

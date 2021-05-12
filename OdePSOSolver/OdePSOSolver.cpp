@@ -144,15 +144,15 @@ int main()
 	solver->initalizeProblem(std::shared_ptr<ProblemWrapperIF>(new TestExp));
 	solver->initalizeSolverVectors(1);
 
-	ParticleParameters partParams(10, 10, .5, 0., .5, 1., 1000, 1e-10);
-	OdeSolverParameters params(1e-14, 1e-13, 2, 15, .01, 1, partParams, 2);
+	ParticleParameters partParams(10, 10000, .5, 0., .5, 1., 1000, 1e-10);
+	OdeSolverParameters params(1e-10, 1e-9, 2, 3, .01, 1, partParams, 2);
 
 	std::minstd_rand randThing(654321);
 	Eigen::VectorXd currentState = ic;
 
 	ParticleProcessor processor;
 
-	processor.setParamsAndWayPoint(params, 0, 1, 1000.);
+	processor.setParamsAndWayPoint(params, 0, 5, 5.);
 
 	processor.PSO(solver, randThing, currentState);
 
@@ -164,7 +164,7 @@ int main()
 		processor.getExpectedDt() << "\n" <<
 		processor.getVarRich() << "\n" <<
 		processor.getParams().getC() << "\n" <<
-		processor.getBestParticle().estimateGlobalError(1000.) << "\n" <<
+		processor.getBestParticle().estimateGlobalError(5) << "\n" <<
 		processor.getBestParticle().getParameters().getTotalRunTime() << "\n";
 
 #endif
