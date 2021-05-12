@@ -20,10 +20,18 @@ namespace odepso
 			CRANK_NICOLSON = 50
 		};
 
-		//Solver Comparison
-		static const bool solverComp(const SOLVER_TYPES& solverOne, const SOLVER_TYPES& solverTwo);
-
 		//Smart Adder for Vectors
 		static Eigen::VectorXd smartAdd(const std::list<Eigen::VectorXd, Eigen::aligned_allocator<Eigen::VectorXd>>& vectorArguments);
+
+		//Compare our solvers
+		struct CompSolvers
+		{
+			inline bool operator()(SOLVER_TYPES solver1, SOLVER_TYPES solver2) const
+			{
+				return static_cast<unsigned int>(solver1) < static_cast<unsigned int>(solver2);
+			}
+		};
+
+		static CompSolvers compSolvers;
 	};
 }

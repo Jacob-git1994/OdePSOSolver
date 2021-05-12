@@ -1,17 +1,6 @@
 #include "Common.h"
 
 /// <summary>
-/// Comparison between two solvers
-/// </summary>
-/// <param name="solverOne"></param>
-/// <param name="solverTwo"></param>
-/// <returns></returns>
-const bool odepso::Common::solverComp(const SOLVER_TYPES& solverOne, const SOLVER_TYPES& solverTwo)
-{
-	return static_cast<unsigned int>(solverOne) < static_cast<unsigned int>(solverTwo);
-}
-
-/// <summary>
 /// Smart way to add vectors to correct for errors
 /// </summary>
 /// <param name="vectorArguments"></param>

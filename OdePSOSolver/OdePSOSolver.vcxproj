@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Euler.cpp" />
+    <ClCompile Include="MethodWrapper.cpp" />
     <ClCompile Include="OdePSOSolver.cpp" />
     <ClCompile Include="OdeSolverParameters.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -207,6 +208,7 @@
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="Euler.h" />
+    <ClInclude Include="MethodWrapper.h" />
     <ClInclude Include="OdeSolverParameters.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleParameters.h" />

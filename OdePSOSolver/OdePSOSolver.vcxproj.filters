@@ -66,6 +66,9 @@
     <ClCompile Include="ParticleProcessor.cpp">
       <Filter>Particle</Filter>
     </ClCompile>
+    <ClCompile Include="MethodWrapper.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SolverIF.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="ParticleProcessor.h">
       <Filter>Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodWrapper.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

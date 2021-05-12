@@ -21,10 +21,30 @@ bool odepso::ParticleProcessor::compParticle(const Particle& lhs, const Particle
 	//The errors are comparable
 	if (globalErrorInRange(lhs) && globalErrorInRange(rhs))
 	{
-		//Best error return lhs.estimateGlobalError(wayPointEnd) < rhs.estimateGlobalError(wayPointEnd);
-		//Get fastest running in range
-		//return lhs.getParameters().getDt() > rhs.getParameters().getDt();
-		return lhs.getParameters().getTotalRunTime() < rhs.getParameters().getTotalRunTime();
+		//Return the smallest run time
+		if (std::fabs(lhs.getParameters().getTotalRunTime() - rhs.getParameters().getTotalRunTime()) > std::numeric_limits<double>::epsilon())
+		{
+			return lhs.getParameters().getTotalRunTime() < rhs.getParameters().getTotalRunTime();
+		}
+		else //If run times are the same return the one with the largest dt
+		{
+			//Check if dts are unique
+			if (std::fabs(lhs.getParameters().getDt() - rhs.getParameters().getDt()) > std::numeric_limits<double>::epsilon())
+			{
+				return lhs.getParameters().getDt() > rhs.getParameters().getDt();
+			}
+			else //Dts are the same so return the richardson levels
+			{
+				if (lhs.getParameters().getRichardsonLevels() != rhs.getParameters().getRichardsonLevels())
+				{
+					return lhs.getParameters().getRichardsonLevels() < rhs.getParameters().getRichardsonLevels();
+				}
+				else //Just return the smallest error since everything is equal..which is just left to run off
+				{
+					return lhs.estimateGlobalError(finalEndTime) < rhs.estimateGlobalError(finalEndTime);
+				}
+			}
+		}
 	}
 	else if (globalErrorInRange(lhs) && !globalErrorInRange(rhs))
 	{
@@ -357,8 +377,8 @@ void odepso::ParticleProcessor::PSO(std::unique_ptr<SolverIF>& solverTypeIn, std
 		//Calcualte statistics from the previous pass through
 		calcStatistics();
 
-		std::cout << bestParticle.getParameters().getDt() << "\t" << bestParticle.getParameters().getRichardsonLevels() << "\t" << bestParticle.getParameters().getTotalRunTime() << "\n";
-		std::cout << varDt << "\t" << varRich << "\n";
+		std::cout << bestParticle.getParameters().getDt() << "\t" << bestParticle.getParameters().getRichardsonLevels() << "\t" << bestParticle.getParameters().getTotalRunTime() << "\t" << bestParticle.getParameters().getTotalError() << "\n";
+		//std::cout << varDt << "\t" << varRich << "\n";
 	}
 
 	//Update the best parameters for this best particle
