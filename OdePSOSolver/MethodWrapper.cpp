@@ -4,7 +4,7 @@ odepso::MethodWrapper::MethodWrapper() :
 	methodsMap(std::map<Common::SOLVER_TYPES, std::unique_ptr<SolverIF>, Common::CompSolvers>()),
 	paramsMap(std::map<Common::SOLVER_TYPES, OdeSolverParameters, Common::CompSolvers>()),
 	resultsMap(std::map<Common::SOLVER_TYPES, std::vector<std::pair<double, Eigen::VectorXd>>, Common::CompSolvers>()),
-	psoProcessor(std::move(odepso::ParticleProcessor())),
+	psoProcessorMap(std::map<Common::SOLVER_TYPES, ParticleProcessor, Common::CompSolvers>()),
 	randomStruct(RandomStruct())
 {
 	//Nothing else to do here
@@ -21,6 +21,7 @@ bool odepso::MethodWrapper::initialize(const OdeSolverParameters& paramsIn)
 	//If valid clear our lists
 	methodsMap.clear();
 	paramsMap.clear();
+	psoProcessorMap.clear();
 	resultsMap.clear();
 	randomStruct = RandomStruct();
 
@@ -52,7 +53,10 @@ bool odepso::MethodWrapper::initialize(const OdeSolverParameters& paramsIn)
 			paramsMap.emplace(methodItr->first, paramsIn);
 
 			//Build result map
-			resultsMap.emplace(methodItr->first, std::vector<std::pair<double, Eigen::VectorXd>>());
+			resultsMap.emplace(methodItr->first, std::move(std::vector<std::pair<double, Eigen::VectorXd>>()));
+
+			//Build our particle processor map
+			psoProcessorMap.emplace(methodItr->first, std::move(odepso::ParticleProcessor()));
 		}
 
 		//Set up our random generators

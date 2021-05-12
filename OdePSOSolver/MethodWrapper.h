@@ -34,7 +34,7 @@ namespace odepso
 		std::map<Common::SOLVER_TYPES, std::vector<std::pair<double, Eigen::VectorXd>>, Common::CompSolvers> resultsMap;
 
 		//Our particle processor
-		ParticleProcessor psoProcessor;
+		std::map<Common::SOLVER_TYPES, ParticleProcessor, Common::CompSolvers> psoProcessorMap;
 
 		//Store some of our random variables
 		struct RandomStruct
