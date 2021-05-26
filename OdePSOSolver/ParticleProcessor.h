@@ -37,9 +37,6 @@ namespace odepso
 		//Best particle
 		Particle bestParticle;
 
-		//Run one particle until end time
-		void runParticle(std::unique_ptr<SolverIF>& solverTypeIn, Particle& particleIn, const Eigen::VectorXd& currentStateIn);
-
 		//Compare particles
 		bool compParticle(const Particle& lhs, const Particle& rhs) const;
 
@@ -108,5 +105,8 @@ namespace odepso
 
 		//Get rich var
 		const double& getVarRich() const;
+
+		//Run one particle until end time
+		void runParticle(std::unique_ptr<SolverIF>& solverTypeIn, Particle& particleIn, const Eigen::VectorXd& currentStateIn);
 	};
 }

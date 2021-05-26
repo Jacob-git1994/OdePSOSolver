@@ -28,6 +28,9 @@
     <Filter Include="Particle">
       <UniqueIdentifier>{6817f197-3d1b-4f06-a6f2-94e8cd2901ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OdePSO">
+      <UniqueIdentifier>{96bc6afe-5ffd-4d8a-9444-79b6f0fcd2d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OdePSOSolver.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="MethodWrapper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="OdePSOEngine.cpp">
+      <Filter>OdePSO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SolverIF.h">
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="MethodWrapper.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="OdePSOEngine.h">
+      <Filter>OdePSO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
