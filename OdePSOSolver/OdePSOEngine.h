@@ -35,7 +35,8 @@ namespace odepso
 			ParticleProcessor& particleProcessorIn, 
 			std::vector<std::pair<OdeSolverParameters,
 			Eigen::VectorXd>>& resultVector, 
-			const Eigen::VectorXd& initialConditions);
+			const Eigen::VectorXd& initialConditions,
+			const bool& bypassPSOIn);
 
 	public:
 
@@ -48,7 +49,7 @@ namespace odepso
 		~OdePSOEngine() = default;
 
 		//Run
-		void run(std::shared_ptr<ProblemWrapperIF> problemIn, const Eigen::VectorXd& initialConditions, const OdeSolverParameters& paramsIn, const double& leftTime, const double& rightTime, const size_t& numWayPoints);
+		void run(std::shared_ptr<ProblemWrapperIF> problemIn, const Eigen::VectorXd& initialConditions, const OdeSolverParameters& paramsIn, const double& leftTime, const double& rightTime, const size_t& numWayPoints, const bool& bypassPSO);
 
 		//Get results of the best method
 		const std::vector < std::pair<OdeSolverParameters, Eigen::VectorXd>>& getResults() const;

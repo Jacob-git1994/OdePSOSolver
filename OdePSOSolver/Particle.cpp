@@ -187,7 +187,7 @@ const double odepso::Particle::estimateGlobalError(const double& finalTimeIn) co
 	}
 	else if (vecSize == 1)
 	{
-		estimatedGlobalError = particleParameters.getTotalError() + ((finalTimeIn - particleParameters.getCurrentTime()) / particleParameters.getDt()) * particleParameters.getCurrentError();
+		estimatedGlobalError = particleParameters.getTotalError() + ((finalTimeIn - particleParameters.getCurrentTime()) / particleParameters.getDt()) * errorVector.at(0);
 	}
 	else if (vecSize == 2)
 	{
