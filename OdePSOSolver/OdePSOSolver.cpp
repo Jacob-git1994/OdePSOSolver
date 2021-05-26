@@ -18,6 +18,7 @@
 #include "Richardson.h"
 #include "Particle.h"
 #include "ParticleProcessor.h"
+#include "OdePSOEngine.h"
 
 using namespace odepso;
 
@@ -133,7 +134,7 @@ int main()
 		currentState = myParticle.getBestResult();
 	}
 
-#else 
+#elif 0 
 	std::unique_ptr<SolverIF> solver(new RungeKutta4());
 	Richardson richardsonTables;
 	Eigen::VectorXd sol;
@@ -144,15 +145,15 @@ int main()
 	solver->initalizeProblem(std::shared_ptr<ProblemWrapperIF>(new TestExp));
 	solver->initalizeSolverVectors(1);
 
-	ParticleParameters partParams(10, 10, .5, 0., .5, 1., 1000, 1e-10);
-	OdeSolverParameters params(1e-14, 1e-13, 2, 15, .01, 1, partParams, 2);
+	ParticleParameters partParams(10, 100, .25, 0, .25, .5, 1000, .1);
+	OdeSolverParameters params(1e-10, 1e-9, 2, 10, .01, 1, partParams, 2);
 
 	std::minstd_rand randThing(654321);
 	Eigen::VectorXd currentState = ic;
 
 	ParticleProcessor processor;
 
-	processor.setParamsAndWayPoint(params, 0, 1, 1000.);
+	processor.setParamsAndWayPoint(params, 0, 1., 5.);
 
 	processor.PSO(solver, randThing, currentState);
 
@@ -164,8 +165,27 @@ int main()
 		processor.getExpectedDt() << "\n" <<
 		processor.getVarRich() << "\n" <<
 		processor.getParams().getC() << "\n" <<
-		processor.getBestParticle().estimateGlobalError(1000.) << "\n" <<
+		processor.getBestParticle().estimateGlobalError(5) << "\n" <<
 		processor.getBestParticle().getParameters().getTotalRunTime() << "\n";
+
+#else
+
+OdePSOEngine engine;
+
+ParticleParameters partParams(10, 1000, .25, 0, .25, .5, 1000, .1);
+OdeSolverParameters params(1e-4, 1e-3, 2, 10, .01, 1, partParams, 2);
+params.setAllowedRK2(false);
+params.setAllowedEuler(false);
+Eigen::VectorXd ic;
+ic.resize(1); ic(0) = 1.;
+auto sol = ic;
+
+engine.run(std::shared_ptr<ProblemWrapperIF>(new TestExp), ic, params, 0, 3, 1);
+
+for (const auto& result : engine.getResults())
+{
+	std::cout << std::setprecision(14) << result.second << "\n";
+}
 
 #endif
 

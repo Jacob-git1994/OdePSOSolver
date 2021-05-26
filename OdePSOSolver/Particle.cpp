@@ -236,3 +236,8 @@ void odepso::Particle::clearParticleHistory(const OdeSolverParameters& paramsIn)
 	particleParameters.setTotalError(paramsIn.getTotalError());
 	particleParameters.setTotalRunTime(paramsIn.getTotalRunTime());
 }
+
+void odepso::Particle::setBestResult(const Eigen::VectorXd& bestStateIn)
+{
+	bestResult = bestStateIn;
+}

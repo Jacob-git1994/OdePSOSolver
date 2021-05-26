@@ -37,9 +37,6 @@ namespace odepso
 		//Best particle
 		Particle bestParticle;
 
-		//Run one particle until end time
-		void runParticle(std::unique_ptr<SolverIF>& solverTypeIn, Particle& particleIn, const Eigen::VectorXd& currentStateIn);
-
 		//Compare particles
 		bool compParticle(const Particle& lhs, const Particle& rhs) const;
 
@@ -77,6 +74,12 @@ namespace odepso
 		//Delete Assign copy
 		ParticleProcessor& operator=(const ParticleProcessor& pararticleProcessorIn) = delete;
 
+		//Move Particle Processor
+		ParticleProcessor(ParticleProcessor&& pararticleProcessorIn) = default;
+
+		//Move Assign
+		ParticleProcessor& operator=(ParticleProcessor&& pararticleProcessorIn) = default;
+
 		virtual ~ParticleProcessor() = default;
 
 		//Set best parameters
@@ -102,5 +105,8 @@ namespace odepso
 
 		//Get rich var
 		const double& getVarRich() const;
+
+		//Run one particle until end time
+		void runParticle(std::unique_ptr<SolverIF>& solverTypeIn, Particle& particleIn, const Eigen::VectorXd& currentStateIn);
 	};
 }

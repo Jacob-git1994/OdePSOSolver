@@ -96,5 +96,7 @@ namespace odepso
 
 		//Clear particle history (essentially resets the particle in prep to be run again)
 		void clearParticleHistory(const OdeSolverParameters& paramsIn);
+
+		void setBestResult(const Eigen::VectorXd& bestStateIn);
 	};
 }
