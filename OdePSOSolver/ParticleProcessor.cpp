@@ -14,6 +14,9 @@ void odepso::ParticleProcessor::runParticle(std::unique_ptr<SolverIF>& solverTyp
 		//Update the state vector
 		currentStateTemp = particleIn.getBestResult();
 	}
+
+	//Set the best state (remove)
+	particleIn.setBestResult(currentStateTemp);
 }
 
 bool odepso::ParticleProcessor::compParticle(const Particle& lhs, const Particle& rhs) const
@@ -376,8 +379,12 @@ void odepso::ParticleProcessor::PSO(std::unique_ptr<SolverIF>& solverTypeIn, std
 
 		//Calcualte statistics from the previous pass through
 		calcStatistics();
+		if (bestParticle.getBestResult().size() < 1)
+		{
+			std::cout << "huh2\n";
+		}
 
-		std::cout << bestParticle.getParameters().getDt() << "\t" << bestParticle.getParameters().getRichardsonLevels() << "\t" << bestParticle.getParameters().getTotalRunTime() << "\t" << bestParticle.getParameters().getTotalError() << "\n";
+		//std::cout << bestParticle.getParameters().getDt() << "\t" << bestParticle.getParameters().getRichardsonLevels() << "\t" << bestParticle.getParameters().getTotalRunTime() << "\t" << bestParticle.getParameters().getTotalError() << "\n";
 		//std::cout << varDt << "\t" << varRich << "\n";
 	}
 
