@@ -9,6 +9,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 {
 	//Build up the way points
 	double curTime = wayPointStartTime;
+	double nextTime = 0.;
 
 	//Should there be an optimization?
 	bool bypassPSO = bypassPSOIn;
@@ -21,6 +22,18 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 
 	//Current Particle
 	odepso::Particle bestParticle = odepso::Particle();
+
+	//Build a vector for the different way points
+	std::vector<double> timePoints;
+	timePoints.push_back(curTime);
+	while (curTime + wayPointDt < wayPointEndTime - wayPointDt)
+	{
+		timePoints.push_back(curTime += wayPointDt);
+	}
+	timePoints.push_back(wayPointEndTime);
+
+	//Time point iterator
+	std::vector<double>::const_iterator timePointItr = timePoints.cbegin();
 
 	//Our the first result (initial condition)
 	std::pair<odepso::OdeSolverParameters, Eigen::VectorXd> tempResult(paramsIn, tempState);
@@ -38,13 +51,18 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 	}
 
 	//Go through our waypoints
-	while (curTime < wayPointEndTime)
+	while (timePointItr != std::prev(timePoints.cend(), 1))
 	{
+		curTime = *timePointItr;
+		nextTime = *(std::next(timePointItr));
+		
+		std::cout << curTime << "\t" << nextTime << "\n";
+
 		//Perform PSO
 		if (!bypassPSO)
 		{
 			//Set our parameters
-			particleProcessorIn.setParamsAndWayPoint(paramsIn, curTime, curTime + wayPointDt, wayPointEndTime);
+			particleProcessorIn.setParamsAndWayPoint(paramsIn, curTime, nextTime, wayPointEndTime);
 
 			//Perform PSO optimization on our problem
 			particleProcessorIn.PSO(solverIn, methodWrapper.getRandStruct().randomEngine, tempState);
@@ -58,7 +76,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 		else
 		{
 			//Set our parameters
-			particleProcessorIn.setParamsAndWayPoint(paramsIn, curTime, curTime + wayPointDt, wayPointEndTime);
+			particleProcessorIn.setParamsAndWayPoint(paramsIn, curTime, nextTime, wayPointEndTime);
 
 			//Bypass the full PSO
 			particleProcessorIn.runParticle(solverIn, bestParticle, tempState);
@@ -71,8 +89,9 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 		}
 
 		//Check if PSO needs to be performed another time if the error is not less than max allowed error.
-		if (bestParticle.estimateGlobalError(wayPointEndTime) <= paramsIn.getMaxAllowedError() &&
-			bestParticle.estimateGlobalError(wayPointEndTime) >= paramsIn.getMinAllowedError())
+		if ((bestParticle.estimateGlobalError(wayPointEndTime) <= paramsIn.getMaxAllowedError() &&
+			bestParticle.estimateGlobalError(wayPointEndTime) >= paramsIn.getMinAllowedError()) ||
+			bypassPSOIn) 
 		{
 			bypassPSO = true;
 
@@ -85,7 +104,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 			resultVector.push_back(tempResult);
 
 			//Update the current time
-			curTime += wayPointDt;
+			timePointItr++;
 		}
 		else if (bestParticle.estimateGlobalError(wayPointEndTime) <= paramsIn.getMaxAllowedError() && bypassCounter >= 3)
 		{
@@ -101,7 +120,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 			resultVector.push_back(tempResult);
 
 			//Update the current time
-			curTime += wayPointDt;
+			timePointItr++;
 		}
 		else if (!bypassPSO)
 		{
@@ -117,7 +136,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 			resultVector.push_back(tempResult);
 
 			//Update the current time
-			curTime += wayPointDt;
+			timePointItr++;
 		}
 		else
 		{
@@ -125,13 +144,7 @@ void odepso::OdePSOEngine::runMethod(std::unique_ptr<SolverIF>& solverIn,
 			bypassPSO = (false || bypassPSOIn) || bypassCounter >= 3;
 		}
 
-		std::cout << curTime << "\t" << paramsIn.getCurrentTime() << "\n";
-	}
-
-	//If odd then an extra result is added
-	if ((int)wayPointEndTime % 2 != 0 && (int)(100000 * resultVector.back().first.getCurrentTime()) > (int)(100000 * wayPointEndTime))
-	{
-		resultVector.pop_back();
+		//std::cout << curTime << "\t" << paramsIn.getCurrentTime() << "\n";
 	}
 }
 

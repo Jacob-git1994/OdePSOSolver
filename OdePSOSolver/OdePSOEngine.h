@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <Eigen\Dense>
+#include <iterator>
 #include <limits>
 #include <stdexcept>
 #include <thread>

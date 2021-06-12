@@ -172,19 +172,19 @@ int main()
 
 OdePSOEngine engine;
 
-ParticleParameters partParams(10, 1000, .25, 0, .25, .5, 1000, .1);
-OdeSolverParameters params(1e-6, 1e-4, 2, 10, .01, 1, partParams, 2);
+ParticleParameters partParams(10, 1000, .25, 0., .25, .5, 1000, .0001);
+OdeSolverParameters params(1e-15, 1e-14, 2, 13, .01, 1, partParams, 2);
 params.setAllowedRK2(false);
 params.setAllowedEuler(false);
 Eigen::VectorXd ic;
 ic.resize(1); ic(0) = 1.;
 auto sol = ic;
 
-engine.run(std::shared_ptr<ProblemWrapperIF>(new TestExp), ic, params, 0, 4, 100, false);
+engine.run(std::shared_ptr<ProblemWrapperIF>(new TestExp), ic, params, 0, 1, 1, false);
 
 for (const auto& result : engine.getResults())
 {
-	std::cout << std::setprecision(14) << result.first.getCurrentTime() << "\t" << result.second << "\t" << result.first.getTotalError() << "\t" << result.first.getDt() << "\t" << result.first.getRichardsonLevels() << "\n";
+	std::cout << std::setprecision(14) << result.first.getCurrentTime() << "\t" << result.second << "\t" << result.first.getTotalError() << "\t" << result.first.getDt() << "\t" << result.first.getRichardsonLevels() << "\t" << result.first.getTotalRunTime() << "\n";
 }
 
 #endif
