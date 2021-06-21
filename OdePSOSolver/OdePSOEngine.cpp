@@ -191,8 +191,8 @@ void odepso::OdePSOEngine::run(std::shared_ptr<ProblemWrapperIF> problemIn, cons
 		std::vector<std::pair<odepso::OdeSolverParameters, Eigen::VectorXd>>& curResult = methodWrapper.getResultsMap()[methodItr.first];
 
 		//Push back our results
-		//threadVec.push_back(std::thread(&OdePSOEngine::runMethod, this, std::ref(curMethod), std::ref(curParams), std::ref(curPartProcessor), std::ref(curResult), std::cref(initialConditions), std::cref(bypassPSO)));
-		runMethod(curMethod, curParams, curPartProcessor, curResult, initialConditions, bypassPSO);
+		threadVec.push_back(std::thread(&OdePSOEngine::runMethod, this, std::ref(curMethod), std::ref(curParams), std::ref(curPartProcessor), std::ref(curResult), std::cref(initialConditions), std::cref(bypassPSO)));
+		//runMethod(curMethod, curParams, curPartProcessor, curResult, initialConditions, bypassPSO);
 	}
 
 	//Join our threads
@@ -221,4 +221,24 @@ const std::vector<std::pair<odepso::OdeSolverParameters, Eigen::VectorXd>>& odep
 	}
 
 	return *bestResult;
+}
+
+const std::vector<std::pair<odepso::OdeSolverParameters, Eigen::VectorXd>>& odepso::OdePSOEngine::getResults(Common::SOLVER_TYPES solverTypeIn) const
+{
+	//Get our results map
+	const std::map<odepso::Common::SOLVER_TYPES, std::vector<std::pair<odepso::OdeSolverParameters, Eigen::VectorXd>>, odepso::Common::CompSolvers>& result = methodWrapper.getResultsMap();
+
+	//Find our result
+	std::map < odepso::Common::SOLVER_TYPES, std::vector<std::pair<odepso::OdeSolverParameters, Eigen::VectorXd>>, odepso::Common::CompSolvers>::const_iterator resultItr = result.find(solverTypeIn);
+
+	//If the result is valid
+	if (resultItr != result.cend())
+	{
+		return resultItr->second;
+	}
+	else
+	{
+		throw std::runtime_error("ERROR - Could not find method");
+	}
+
 }

@@ -55,5 +55,8 @@ namespace odepso
 		//Get results of the best method
 		const std::vector < std::pair<OdeSolverParameters, Eigen::VectorXd>>& getResults() const;
 
+		//Get results for a paticular method
+		const std::vector< std::pair<OdeSolverParameters, Eigen::VectorXd>>& getResults(Common::SOLVER_TYPES solverTypeIn) const;
+
 	};
 }
