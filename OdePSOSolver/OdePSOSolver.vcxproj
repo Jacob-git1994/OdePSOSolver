@@ -120,7 +120,7 @@
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ExcludePath>$(ExcludePath)</ExcludePath>
-    <IncludePath>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Jacob\Documents\Programming\OdePSOSolver\Eigen\eigen-3.3.9;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -179,8 +179,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\Users\Jacob\source\repos\OdePSOSolver\Eigen\eigen-3.3.9\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>Full</Optimization>
+      <AdditionalIncludeDirectories>C:\Users\Jacob\Documents\Programming\OdePSOSolver\Eigen\eigen-3.3.9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

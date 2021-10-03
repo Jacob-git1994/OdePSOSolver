@@ -173,16 +173,17 @@ int main()
 OdePSOEngine engine;
 
 ParticleParameters partParams(10, 1000, .25, 0., .25, .5, 1000, .0001);
-OdeSolverParameters params(1e-7, 1e-6, 2, 13, .01, 1, partParams, 2);
-params.setAllowedRK2(true);
-params.setAllowedEuler(true);
+OdeSolverParameters params(1e-7, 1e-6, 5, 8, .01, 1, partParams, 2);
+params.setAllowedRK2(false);
+params.setAllowedEuler(false);
+params.setAllowedRK4(true);
 Eigen::VectorXd ic;
 ic.resize(1); ic(0) = 1.;
 auto sol = ic;
 
-engine.run(std::shared_ptr<ProblemWrapperIF>(new TestExp), ic, params, 0, 1, 1, false);
+engine.run(std::shared_ptr<ProblemWrapperIF>(new TestExp), ic, params, 0, 1, 10, false);
 
-for (const auto& result : engine.getResults(Common::SOLVER_TYPES::EULER))
+for (const auto& result : engine.getResults(Common::SOLVER_TYPES::RK4))
 {
 	std::cout << std::setprecision(14) << result.first.getCurrentTime() << "\t" << result.second << "\t" << result.first.getTotalError() << "\t" << result.first.getDt() << "\t" << result.first.getRichardsonLevels() << "\t" << result.first.getTotalRunTime() << "\n";
 }
